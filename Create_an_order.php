@@ -67,19 +67,14 @@ function sendToSalesap($entityType, $data) {
 
 $responseOrders = sendToSalesap('orders', $orders);
 
-
-
 ob_start();
 $links = $link;
-
 // В цикле прописываем поиск на совпадения для последующей проверки. Сверять будем по ссылкам, которая хранится в переменнйо $links 
   foreach ($responseOrders['data'] as $key=>$test) {
 
      if (array_search($links, $test['attributes']['customs'])){
         echo $test['attributes']['customs']['custom-66302']  ;
      }
-  
-
   }
 $links2 = ob_get_contents();
 ob_end_clean();
