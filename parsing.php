@@ -1,7 +1,6 @@
+<?php 
 // Текущий скрипт отвечает за парсинг объявлений, о продаже легковых автомобилей, с сайта av.by и отправкой данных в базу данных сайта
 // Парсинг реализован с использованием библиотеки PHPQuery
-<?php 
-
 
 require 'phpQuery.php'; //Подключаем библиотеку phpquery
 
@@ -16,12 +15,9 @@ mysqli_query($connect,"SET CHARACTER SET 'utf8'");
 
 $url = 'https://cars.av.by/filter'; 
 
-
 $file = file_get_contents($url);
 
 $doc = phpQuery::newDocument($file);
-
-
 
 ob_start();
 //Цикл на получение ссылки 1го объявления
@@ -30,9 +26,6 @@ foreach ($doc->find('.main') as $key => $content ) {
 	$text = $content->find(' .listing .listing__items .listing-item__wrap .listing-item__title a ')->attr('href');
 	
 	print_r($text);
-	
-	
-
 }
 $get_links = ob_get_contents();
 ob_end_clean();
@@ -54,7 +47,6 @@ $str_res = end ($tmp);
 
 //Делаем ссылку для получения номера телефона
 $url_js_test = 'https://api.av.by/offers/'.$str_res.'/phones';
-
 
 $phone2 = file_get_contents($url_js_test);
 
@@ -107,7 +99,6 @@ foreach ($doc_content->find('.card  ') as $key => $Fullcontent ) {
 	$probeg2 = strstr($probeg, ' ');
 	$probeg_end = strstr($probeg2, 'км', true); //Получаем из строки $text пробег 
 
-
 	//В переменной $text12 хранится информация о типе кузова, типе привода и цвет
 	$text12 = $Fullcontent->find('.card__description')->text();
 
@@ -118,7 +109,6 @@ foreach ($doc_content->find('.card  ') as $key => $Fullcontent ) {
 	$color_end = strstr($color, ' ');//Получаем цвет из строки $text12
 
 	
-
 	//В переменной $adress лежит информация об адресе
 	$adress = $Fullcontent->find('.card__location')->text();
 
@@ -128,7 +118,7 @@ foreach ($doc_content->find('.card  ') as $key => $Fullcontent ) {
 	$opis = $Fullcontent->find('.card__comment-body')->text();
 	echo $opis;
 
-	// Полученные данные вносим в бд
+	// Полученные данные отправляем в бд
 	link = mysqli_query($connect, "INSERT INTO av (marka, year, car_mileage, fuel_type, capacity, body_type, color, transmission, drive_unit, adress, res_phone, price, opisanie, link) VALUES ('$marka_end', '$year_end', '$probeg_end', '$tip_topliva_end', '$capacity_end', '$kyzov', '$color_end', '$korobka_end', '$privod_end', '$adress', '$get_phone', '$end_price', '$opis', '$link')"); 
 		
 	
