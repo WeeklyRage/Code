@@ -1,6 +1,6 @@
+<?php
 //Скрипт делает автоматичекое создание сделок в crm, данные для поступления в crm мы берем из базы данных сайт
 
-<?php
 
 $db_host = 'localhost';
 $db_name = 'parser';
@@ -35,7 +35,6 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 //Присваиваем токен
 define("SALESAP_TOKEN", "2ycfOZutBAs8SjBAqQ5syJMButU4hpw18CvUevllnWE");
-
 
 $orders = array( 
   'data'=> array (
@@ -101,9 +100,7 @@ var_dump($links2);
          'custom-66298'=> $adress,//Адрес
          'custom-66299'=> $get_phone,//Телефон
          'custom-66302'=> $links//Ссылка на объявление
-
       )
-     
     )
   )
 );
